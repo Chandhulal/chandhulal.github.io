@@ -1,41 +1,70 @@
 import React from 'react'
 
-function Navigation() {
+function Navigation({ onSpiritsHouseClick, onHomeClick, isSpiritsHouse = false }) {
   return (
-    <header className="relative bg-black border-b border-gray-800">
+    <header 
+      className="relative w-full"
+      style={{
+        padding: '1rem 2rem 0 2rem',
+        backgroundColor: isSpiritsHouse ? '#000000' : 'transparent'
+      }}
+    >
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
-        <nav className="flex items-center justify-between py-4 md:py-6">
-          <div className="flex items-center gap-8 md:gap-12">
-            <a href="#about" className="text-white/90 hover:text-white text-sm md:text-base font-light tracking-wide transition-colors">
-              ABOUT
-            </a>
-            <a href="#specialization" className="text-white/90 hover:text-white text-sm md:text-base font-light tracking-wide transition-colors">
-              SERVICES
-            </a>
-            <a href="#products" className="text-white/90 hover:text-white text-sm md:text-base font-light tracking-wide transition-colors">
-              EQUIPMENT
-            </a>
-          </div>
-          
-          <div className="flex-shrink-0">
-            <div className="text-center">
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-wider">
-                BLUE ICE
-              </h1>
-              <p className="text-xs md:text-sm text-white/70 tracking-widest uppercase">
-                BARTENDING SERVICES
-              </p>
+        <nav className="flex items-center justify-between py-2 md:py-3 pb-0">
+          {!isSpiritsHouse && (
+            <div className="flex items-center">
+              <img 
+                src="/new_logo.PNG" 
+                alt="Logo"
+                className="h-12 md:h-16 lg:h-20"
+                style={{ objectFit: 'contain' }}
+              />
             </div>
+          )}
+          
+          {isSpiritsHouse && <div></div>}
+          
+          <div className="flex items-center gap-8 md:gap-12 lg:gap-16">
+            <a 
+              href="#home" 
+              onClick={onHomeClick}
+              className="text-white text-sm md:text-base font-semibold tracking-wide uppercase transition-opacity hover:opacity-80 relative" 
+              style={{ opacity: 1 }}
+            >
+              Home
+              {!isSpiritsHouse && <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white"></span>}
+            </a>
+            <a href="#alchemy" className="text-white text-sm md:text-base font-semibold tracking-wide uppercase transition-opacity hover:opacity-80">
+              Alchemy
+            </a>
+            <a 
+              href="#spirits" 
+              onClick={onSpiritsHouseClick}
+              className="text-white text-sm md:text-base font-semibold tracking-wide uppercase transition-opacity hover:opacity-80 relative"
+              style={{ opacity: 1 }}
+            >
+              Spirits House
+              {isSpiritsHouse && <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white"></span>}
+            </a>
           </div>
           
-          <div className="flex items-center gap-8 md:gap-12">
-            <a href="#why" className="text-white/90 hover:text-white text-sm md:text-base font-light tracking-wide transition-colors">
-              WHY US
-            </a>
-            <a href="#contact" className="text-white/90 hover:text-white text-sm md:text-base font-light tracking-wide transition-colors">
-              CONTACT
-            </a>
-          </div>
+          {!isSpiritsHouse && (
+            <div className="flex items-center">
+              <a 
+                href="#contact"
+                className="px-4 py-2 md:px-6 md:py-3 text-white text-sm md:text-base font-bold tracking-wide uppercase transition-all hover:opacity-90"
+                style={{
+                  border: '1px solid white',
+                  borderRadius: '4px',
+                  backgroundColor: '#6d28d9'
+                }}
+              >
+                CONTACT US
+              </a>
+            </div>
+          )}
+          
+          {isSpiritsHouse && <div></div>}
         </nav>
       </div>
     </header>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 const mainProducts = [
   {
@@ -13,90 +13,6 @@ const mainProducts = [
   },
 ]
 
-const words = ['Shake', 'Pour', 'Perfect']
-
-function AnimatedWords() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isReducedMotion, setIsReducedMotion] = useState(false)
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setIsReducedMotion(mediaQuery.matches)
-    
-    const handleChange = (e) => setIsReducedMotion(e.matches)
-    mediaQuery.addEventListener('change', handleChange)
-    
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
-
-  useEffect(() => {
-    if (isReducedMotion) return
-
-    const timings = [1800, 1800, 2500]
-    const timeout = setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % words.length)
-    }, timings[currentIndex])
-
-    return () => clearTimeout(timeout)
-  }, [currentIndex, isReducedMotion])
-
-  return (
-    <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center overflow-hidden">
-      {words.map((word, index) => {
-        const isActive = currentIndex === index
-        const wasActive = currentIndex === (index + 1) % words.length
-        const isUpcoming = currentIndex < index || (currentIndex === words.length - 1 && index === 0)
-        const isOutline = word === 'Pour'
-        
-        if (isReducedMotion) {
-          return (
-            <div
-              key={index}
-              className={`absolute text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-gray-900 tracking-tighter ${
-                index === currentIndex ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              {word}
-            </div>
-          )
-        }
-
-        let className = 'absolute text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter transition-all duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)]'
-        let style = {}
-
-        if (isActive) {
-          className += ' opacity-100 scale-100 translate-x-0 translate-y-0'
-          if (isOutline) {
-            className += ' text-transparent'
-            style = {
-              WebkitTextStroke: '3px #1e40af',
-              textStroke: '3px #1e40af',
-            }
-          } else {
-            className += ' text-gray-900'
-          }
-        } else if (wasActive) {
-          className += ' opacity-0 scale-[1.2] translate-x-12 translate-y-12'
-        } else if (isUpcoming) {
-          className += ' opacity-0 scale-50 translate-x-0 translate-y-0'
-        } else {
-          className += ' opacity-0 scale-50 translate-x-0 translate-y-0'
-        }
-
-        return (
-          <div
-            key={index}
-            className={className}
-            style={style}
-          >
-            {word}
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
 function Products() {
   return (
     <section className="relative py-16 md:py-20 lg:py-24 bg-[#0a0e27] -mt-px">
@@ -108,10 +24,6 @@ function Products() {
       ></div>
       <div className="relative z-10 container mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-16 md:mb-20">
-            <AnimatedWords />
-          </div>
-          
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Premium Bar Equipment
